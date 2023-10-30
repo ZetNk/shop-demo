@@ -15,11 +15,13 @@ public class CartRepository : ICartRepository
     public void Add<T>(T entity) where T : class
     {
         _context.Add(entity);
+        _context.SaveChanges();
     }
 
     public async Task AddAsync(CartItem caartItem)
     {
         await _context.AddAsync(caartItem);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<CartItem?> GetById(int cartItemId)
