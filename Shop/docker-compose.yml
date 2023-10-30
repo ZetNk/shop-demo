@@ -1,0 +1,28 @@
+﻿version: '3'
+services:
+  server:
+    image: mcr.microsoft.com/mssql/server:latest
+    platform: linux/amd64
+    networks:
+      - shopnetwork
+    ports:
+      - 1433:1433
+    environment:
+      SA_PASSWORD: s<YourServerPassword>
+      ACCEPT_EULA: Y
+  shopapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5067:5067"
+    networks:
+      - shopnetwork
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - USER_SECRETS_ID=<UserSecretsId>
+    volumes:
+      - ~/.microsoft/usersecrets$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+networks:
+  shopnetwork:
+    driver: bridge
