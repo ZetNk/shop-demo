@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5067:5067"
+      - "8080:80"
     networks:
       - shopnetwork
     environment:
