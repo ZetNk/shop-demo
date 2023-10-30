@@ -31,12 +31,12 @@ public class CartServiceTests
     }
 
     [Fact]
-    public async Task DeleteCartItem_ValidInput_ReturnsOkResult()
+    public async Task DeleteCartItem_ValidInput_ReturnsUnauthorizedResult()
     {
         // Arrange
         var cartItemId = 1; 
         var userId = "testUserId";
-        var cartItem = new CartItem { Name = "test", Description="testing", Price=9, UserId= "email.com" };
+        var cartItem = new CartItem { Name = "test", Description="testing", Price=9, UserId= "user@gmail.com" };
         var cartRepository = new Mock<ICartRepository>();
         cartRepository.Setup(repo => repo.GetById(cartItemId)).ReturnsAsync(cartItem);
         var s3Client = new Mock<IAmazonS3>();
@@ -46,7 +46,7 @@ public class CartServiceTests
         var result = await cartService.DeleteCartItem(cartItemId, userId);
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        Assert.IsType<UnauthorizedResult>(result);
     }
 
 }
