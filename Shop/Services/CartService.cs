@@ -62,7 +62,7 @@ public class CartService : ICartService
         var cartItem = await _cartRepository.GetById(id);
 
         if (cartItem == null) return new BadRequestResult();
-        if (string.Equals(cartItem.UserId.ToLower().Trim(), userId)) return new UnauthorizedResult();
+        if (!string.Equals(cartItem.UserId.ToLower().Trim(), userId)) return new UnauthorizedResult();
 
         _cartRepository.Delete(cartItem);
         return new OkResult();

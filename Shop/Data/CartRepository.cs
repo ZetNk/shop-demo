@@ -42,6 +42,7 @@ public class CartRepository : ICartRepository
     public void Delete<T>(T entity) where T : class
     {
         _context.Remove(entity);
+        _context.SaveChanges();
     }
 
     public async Task<PagedList<CartItem>> GetCartItems(CartItemsParams cartParams)
